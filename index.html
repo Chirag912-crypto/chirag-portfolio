@@ -160,7 +160,23 @@
                 <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white mb-1">Promoter</h3>
+                                <p class="text-[#FF9933] font-medium text-sm tracking-wide uppercase">Vi India Ltd.</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 text-gray-400 font-light text-sm md:text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-[#FF9933] mt-1 text-xs"></i> Actively promoted Vi services through on-ground marketing and customer interaction.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-[#FF9933] mt-1 text-xs"></i> Facilitated new prepaid activations and educated users on competitive data plans.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check text-[#FF9933] mt-1 text-xs"></i> Maintained high engagement levels at physical kiosks to drive brand awareness.</li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-6">
@@ -274,7 +290,8 @@
             if (menu.classList.contains('hidden')) {
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
-                icon.style.transform = 'rotate(0deg)';
+                icon.style.transform = 
+    'rotate(0deg)';
             } else {
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-times');
