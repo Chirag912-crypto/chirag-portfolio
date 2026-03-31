@@ -1,415 +1,520 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chirag Maru | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Squada+One&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Outfit', sans-serif; 
-            background-color: #050505;
-            color: #E5E5E5;
-        }
-        
-        .font-etna {
-            font-family: 'Etna', sans-serif;
-        }
-        
-        .font-squada {
-            font-family: 'Squada One', cursive;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chirag Maru | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        saffron: '#FF9933',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Squada+One&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Outfit', sans-serif; 
+        }
+        
+        .font-etna { font-family: 'Etna', sans-serif; }
+        .font-squada { font-family: 'Squada One', cursive; }
 
-        :root {
-            --saffron: #FF9933;
-            --saffron-glow: rgba(255, 153, 51, 0.15);
-        }
+        :root {
+            --saffron-glow: rgba(255, 153, 51, 0.15);
+            --blue-glow: rgba(0, 87, 183, 0.15);
+        }
 
-        /* Smooth Glassmorphism Cards */
-        .glass-panel {
-            background: linear-gradient(145deg, rgba(25, 25, 25, 0.6) 0%, rgba(10, 10, 10, 0.8) 100%);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* Smooth Glassmorphism Cards - Adapts to Light/Dark Mode */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        .glass-panel:hover {
-            border-color: rgba(255, 153, 51, 0.4);
-            box-shadow: 0 10px 30px var(--saffron-glow);
-            transform: translateY(-4px);
-        }
+        html.dark .glass-panel {
+            background: linear-gradient(145deg, rgba(25, 25, 25, 0.6) 0%, rgba(10, 10, 10, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: none;
+        }
 
-        /* Ambient Glow Behind Hero */
-        .ambient-glow {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--saffron-glow) 0%, transparent 70%);
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 0;
-            pointer-events: none;
-        }
+        .glass-panel:hover {
+            border-color: rgba(255, 153, 51, 0.4);
+            transform: translateY(-5px) scale(1.01);
+        }
+        
+        html.dark .glass-panel:hover {
+            box-shadow: 0 10px 30px var(--saffron-glow);
+        }
+        
+        html:not(.dark) .glass-panel:hover {
+            box-shadow: 0 15px 35px rgba(255, 153, 51, 0.15);
+        }
 
-        /* Icon Wrapper Glow */
-        .icon-glow {
-            box-shadow: 0 0 15px var(--saffron-glow);
-        }
-    </style>
+        /* Ambient Glow Behind Hero */
+        .ambient-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--saffron-glow) 0%, transparent 70%);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        html:not(.dark) .ambient-glow { opacity: 0.5; }
+
+        /* Icon Wrapper Glow */
+        .icon-glow {
+            box-shadow: 0 0 15px var(--saffron-glow);
+            transition: transform 0.3s ease;
+        }
+        
+        .icon-glow:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+    </style>
 </head>
-<body class="antialiased selection:bg-[#FF9933] selection:text-black">
+<body class="antialiased bg-gray-50 dark:bg-[#050505] text-gray-800 dark:text-[#E5E5E5] transition-colors duration-500 selection:bg-[#FF9933] selection:text-black overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 bg-[#050505]/90 backdrop-blur-md border-b border-white/5 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center relative">
-            <a href="#" class="font-etna text-[#FF9933] text-2xl md:text-3xl font-bold tracking-wide hover:opacity-80 transition duration-300">
-                Portfolio
-            </a>
-            
-            <div class="hidden lg:flex space-x-6 text-sm font-medium tracking-wide">
-                <a href="#about" class="text-gray-400 hover:text-[#FF9933] transition duration-300"><i class="fas fa-user mr-1.5"></i>Info</a>
-                <a href="#education" class="text-gray-400 hover:text-[#FF9933] transition duration-300"><i class="fas fa-graduation-cap mr-1.5"></i>Education</a>
-                <a href="#experience" class="text-gray-400 hover:text-[#FF9933] transition duration-300"><i class="fas fa-briefcase mr-1.5"></i>Experience</a>
-                <a href="#strengths" class="text-gray-400 hover:text-[#FF9933] transition duration-300"><i class="fas fa-bolt mr-1.5"></i>Strengths</a>
-                <a href="#skills" class="text-gray-400 hover:text-[#FF9933] transition duration-300"><i class="fas fa-star mr-1.5"></i>Skills</a>
-                <a href="#languages" class="text-gray-400 hover:text-[#FF9933] transition duration-300"><i class="fas fa-language mr-1.5"></i>Languages</a>
-            </div>
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-[#050505]/90 backdrop-blur-md border-b border-gray-200 dark:border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative">
+            <a href="#" class="font-etna text-[#FF9933] text-2xl md:text-3xl font-bold tracking-wide hover:scale-105 transition-transform duration-300">
+                Portfolio
+            </a>
+            
+            <div class="hidden lg:flex items-center space-x-6 text-sm font-medium tracking-wide">
+                <a href="#about" class="text-gray-600 dark:text-gray-400 hover:text-[#FF9933] dark:hover:text-[#FF9933] transition-all duration-300 hover:-translate-y-1"><i class="fas fa-user mr-1.5"></i>Info</a>
+                <a href="#experience" class="text-gray-600 dark:text-gray-400 hover:text-[#FF9933] dark:hover:text-[#FF9933] transition-all duration-300 hover:-translate-y-1"><i class="fas fa-briefcase mr-1.5"></i>Experience</a>
+                <a href="#education" class="text-gray-600 dark:text-gray-400 hover:text-[#FF9933] dark:hover:text-[#FF9933] transition-all duration-300 hover:-translate-y-1"><i class="fas fa-graduation-cap mr-1.5"></i>Education</a>
+                <a href="#strengths" class="text-gray-600 dark:text-gray-400 hover:text-[#FF9933] dark:hover:text-[#FF9933] transition-all duration-300 hover:-translate-y-1"><i class="fas fa-bolt mr-1.5"></i>Strengths</a>
+                <a href="#skills" class="text-gray-600 dark:text-gray-400 hover:text-[#FF9933] dark:hover:text-[#FF9933] transition-all duration-300 hover:-translate-y-1"><i class="fas fa-star mr-1.5"></i>Skills</a>
+                <a href="#languages" class="text-gray-600 dark:text-gray-400 hover:text-[#FF9933] dark:hover:text-[#FF9933] transition-all duration-300 hover:-translate-y-1"><i class="fas fa-language mr-1.5"></i>Languages</a>
+                
+                <button id="theme-toggle" class="ml-4 p-2 rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-[#FF9933] hover:bg-gray-200 dark:hover:bg-white/20 transition-all duration-300 focus:outline-none">
+                    <i id="theme-toggle-icon" class="fas fa-sun text-lg"></i>
+                </button>
+            </div>
 
-            <button id="menu-btn" onclick="toggleMenu()" class="lg:hidden text-gray-400 hover:text-[#FF9933] focus:outline-none transition-colors duration-300 z-50">
-                <i id="menu-icon" class="fas fa-bars text-2xl transition-transform duration-300"></i>
-            </button>
-        </div>
+            <div class="flex items-center lg:hidden space-x-4 z-50">
+                <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-[#FF9933] transition-all duration-300">
+                    <i id="theme-toggle-icon-mobile" class="fas fa-sun text-lg"></i>
+                </button>
+                <button id="menu-btn" onclick="toggleMenu()" class="text-gray-600 dark:text-gray-400 hover:text-[#FF9933] focus:outline-none transition-colors duration-300">
+                    <i id="menu-icon" class="fas fa-bars text-2xl transition-transform duration-300"></i>
+                </button>
+            </div>
+        </div>
 
-        <div id="mobile-menu" class="hidden flex-col bg-[#0a0a0a] border-b border-white/10 w-full absolute top-full left-0 py-4 shadow-2xl transition-all duration-300 origin-top">
-            <a href="#about" onclick="toggleMenu()" class="block px-6 py-3 text-gray-300 hover:text-[#FF9933] hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-user w-6 text-center"></i> Personal Information</a>
-            <a href="#education" onclick="toggleMenu()" class="block px-6 py-3 text-gray-300 hover:text-[#FF9933] hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-graduation-cap w-6 text-center"></i> Education</a>
-            <a href="#experience" onclick="toggleMenu()" class="block px-6 py-3 text-gray-300 hover:text-[#FF9933] hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-briefcase w-6 text-center"></i> Experience</a>
-            <a href="#strengths" onclick="toggleMenu()" class="block px-6 py-3 text-gray-300 hover:text-[#FF9933] hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-bolt w-6 text-center"></i> Core Strengths</a>
-            <a href="#skills" onclick="toggleMenu()" class="block px-6 py-3 text-gray-300 hover:text-[#FF9933] hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-star w-6 text-center"></i> Skills & Interests</a>
-            <a href="#languages" onclick="toggleMenu()" class="block px-6 py-3 text-gray-300 hover:text-[#FF9933] hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-language w-6 text-center"></i> Languages</a>
-        </div>
-    </nav>
+        <div id="mobile-menu" class="hidden flex-col bg-white dark:bg-[#0a0a0a] border-b border-gray-200 dark:border-white/10 w-full absolute top-full left-0 py-4 shadow-2xl transition-all duration-300 origin-top">
+            <a href="#about" onclick="toggleMenu()" class="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-[#FF9933] hover:bg-gray-50 dark:hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-user w-6 text-center"></i> Personal Information</a>
+            <a href="#experience" onclick="toggleMenu()" class="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-[#FF9933] hover:bg-gray-50 dark:hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-briefcase w-6 text-center"></i> Experience</a>
+            <a href="#education" onclick="toggleMenu()" class="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-[#FF9933] hover:bg-gray-50 dark:hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-graduation-cap w-6 text-center"></i> Education</a>
+            <a href="#strengths" onclick="toggleMenu()" class="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-[#FF9933] hover:bg-gray-50 dark:hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-bolt w-6 text-center"></i> Core Strengths</a>
+            <a href="#skills" onclick="toggleMenu()" class="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-[#FF9933] hover:bg-gray-50 dark:hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-star w-6 text-center"></i> Skills & Interests</a>
+            <a href="#languages" onclick="toggleMenu()" class="block px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-[#FF9933] hover:bg-gray-50 dark:hover:bg-white/5 text-base font-medium transition duration-300"><i class="fas fa-language w-6 text-center"></i> Languages</a>
+        </div>
+    </nav>
 
-    <header class="relative pt-40 pb-24 px-6 text-center overflow-hidden flex flex-col items-center justify-center min-h-[85vh]">
-        <div class="ambient-glow"></div>
-        <div class="relative z-10 max-w-4xl mx-auto">
-            <h2 class="text-[#FF9933] font-medium tracking-widest uppercase mb-4 text-sm md:text-base"><i class="fas fa-network-wired mr-2"></i>Sales & Telecom Professional</h2>
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
-                Hi, I'm <span class="font-squada text-white tracking-wider font-normal">Chirag Maru</span>
-            </h1>
-            <p class="text-lg md:text-xl text-gray-400 font-light mb-10 max-w-2xl mx-auto leading-relaxed">
-                Specializing in customer acquisition, direct marketing, and driving growth in the retail and telecommunications sector.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-5">
-                <a href="#experience" class="px-8 py-3 w-full sm:w-auto bg-[#FF9933] text-black font-semibold rounded-full hover:bg-white hover:shadow-[0_0_20px_rgba(255,153,51,0.4)] transition duration-300 flex items-center justify-center gap-2">
-                    <i class="fas fa-rocket"></i> Explore My Work
-                </a>
-                <a href="mailto:chiragmaru936@gmail.com" class="px-8 py-3 w-full sm:w-auto bg-transparent border border-gray-600 text-white font-medium rounded-full hover:border-[#FF9933] hover:text-[#FF9933] transition duration-300 flex items-center justify-center gap-2">
-                    <i class="fas fa-envelope"></i> Get in Touch
-                </a>
-            </div>
+    <header class="relative pt-40 pb-24 px-6 text-center overflow-hidden flex flex-col items-center justify-center min-h-[85vh]">
+        <div class="ambient-glow"></div>
+        <div class="relative z-10 max-w-4xl mx-auto" data-aos="zoom-in" data-aos-duration="1000">
+            <h2 class="text-[#FF9933] font-medium tracking-widest uppercase mb-4 text-sm md:text-base animate-pulse"><i class="fas fa-network-wired mr-2"></i>Sales & Telecom Professional</h2>
+            <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
+                Hi, I'm <span class="font-squada text-gray-800 dark:text-white tracking-wider font-normal drop-shadow-lg">Chirag Maru</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light mb-10 max-w-2xl mx-auto leading-relaxed">
+                Specializing in retail distribution, customer acquisition, direct marketing, and driving growth in the telecommunications sector.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-5">
+                <a href="#experience" class="px-8 py-3 w-full sm:w-auto bg-[#FF9933] text-black font-semibold rounded-full hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black hover:shadow-[0_0_20px_rgba(255,153,51,0.5)] transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-rocket"></i> Explore My Work
+                </a>
+                <a href="mailto:chiragmaru936@gmail.com" class="px-8 py-3 w-full sm:w-auto bg-transparent border-2 border-gray-400 dark:border-gray-600 text-gray-700 dark:text-white font-medium rounded-full hover:border-[#FF9933] hover:text-[#FF9933] dark:hover:border-[#FF9933] dark:hover:text-[#FF9933] transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-envelope"></i> Get in Touch
+                </a>
+            </div>
 
-            <div class="flex flex-wrap justify-center gap-4 mt-12 text-sm text-gray-400">
-                <span class="flex items-center gap-2 bg-white/5 px-5 py-2 rounded-full border border-white/5"><i class="fas fa-map-marker-alt text-[#FF9933]"></i> Porbandar, Gujarat</span>
-                <a href="tel:+919998923575" class="flex items-center gap-2 bg-white/5 px-5 py-2 rounded-full border border-white/5 hover:border-[#FF9933] hover:text-[#FF9933] transition duration-300 cursor-pointer">
-                    <i class="fas fa-phone text-[#FF9933]"></i> +91 99989 23575
-                </a>
-            </div>
-        </div>
-    </header>
+            <div class="flex flex-wrap justify-center gap-4 mt-12 text-sm text-gray-600 dark:text-gray-400" data-aos="fade-up" data-aos-delay="300">
+                <span class="flex items-center gap-2 bg-white dark:bg-white/5 px-5 py-2 rounded-full border border-gray-200 dark:border-white/5 shadow-sm"><i class="fas fa-map-marker-alt text-[#FF9933]"></i> Porbandar, Gujarat</span>
+                <a href="tel:+919998923575" class="flex items-center gap-2 bg-white dark:bg-white/5 px-5 py-2 rounded-full border border-gray-200 dark:border-white/5 hover:border-[#FF9933] hover:text-[#FF9933] shadow-sm transition duration-300 cursor-pointer">
+                    <i class="fas fa-phone text-[#FF9933]"></i> +91 99989 23575
+                </a>
+            </div>
+        </div>
+    </header>
 
-    <main class="max-w-6xl mx-auto px-6 pb-24 space-y-32 relative z-10">
-        
-        <section id="about" class="scroll-mt-32">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
-                    <i class="fas fa-user text-[#FF9933] text-xl"></i>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Personal Information</h2>
-                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
-            </div>
-            <div class="glass-panel p-8 md:p-10 rounded-3xl">
-                <p class="text-gray-400 leading-relaxed text-lg font-light">
-                    I am a results-driven telecom sales professional with hands-on experience in customer acquisition, prepaid SIM activation, and Mobile Number Portability (MNP). My objective is to build a successful career in the retail and sales sector by leveraging my strong communication skills, customer focus, and enthusiasm for driving sales growth. I am eager to contribute positively to a dynamic sales team and gain valuable on-the-ground experience.
-                </p>
-            </div>
-        </section>
+    <main class="max-w-6xl mx-auto px-6 pb-24 space-y-32 relative z-10">
+        
+        <section id="about" class="scroll-mt-32" data-aos="fade-up">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
+                    <i class="fas fa-user text-[#FF9933] text-xl"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Personal Information</h2>
+                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
+            </div>
+            <div class="glass-panel p-8 md:p-10 rounded-3xl">
+                <p class="text-gray-700 dark:text-gray-400 leading-relaxed text-lg font-light">
+                    I am a results-driven telecom sales professional with extensive hands-on experience in retail management, distributor networking, prepaid SIM activation, and Mobile Number Portability (MNP). My objective is to continually build a successful career in the retail and sales sector by leveraging my strong communication skills, strategic field operations, and enthusiasm for driving revenue growth.
+                </p>
+            </div>
+        </section>
 
-        <section id="education" class="scroll-mt-32">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
-                    <i class="fas fa-graduation-cap text-[#FF9933] text-xl"></i>
-                </div>
-                <h2 class="text-3xl font-bold text-white">Education & Certifications</h2>
-                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-panel p-6 rounded-2xl">
-                    <h4 class="text-[#FF9933] font-semibold text-lg mb-1"><i class="fas fa-university mr-2 opacity-70"></i>Bachelor of Commerce</h4>
-                    <p class="text-white mb-2">K. H. Madhvani College</p>
-                    <p class="text-gray-500 text-sm font-light"><i class="far fa-calendar-alt mr-1"></i> Sept 2023 - Present</p>
-                </div>
-                <div class="glass-panel p-6 rounded-2xl">
-                    <h4 class="text-[#FF9933] font-semibold text-lg mb-1"><i class="fas fa-bezier-curve mr-2 opacity-70"></i>Graphic Design</h4>
-                    <p class="text-white mb-2">Ramba Computer Class</p>
-                    <p class="text-gray-500 text-sm font-light"><i class="far fa-calendar-alt mr-1"></i> Feb 2025 - May 2025</p>
-                </div>
-                <div class="glass-panel p-6 rounded-2xl">
-                    <h4 class="text-[#FF9933] font-semibold text-lg mb-1"><i class="fas fa-chart-line mr-2 opacity-70"></i>Tally & Finance</h4>
-                    <p class="text-white mb-2">Ramba Computer Class</p>
-                    <p class="text-gray-500 text-sm font-light"><i class="far fa-calendar-alt mr-1"></i> Feb 2025 - May 2025</p>
-                </div>
-            </div>
-        </section>
+        <section id="experience" class="scroll-mt-32">
+            <div class="flex items-center gap-4 mb-10" data-aos="fade-up">
+                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
+                    <i class="fas fa-briefcase text-[#FF9933] text-xl"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Professional Experience</h2>
+                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
+            </div>
+            
+            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-300 dark:before:via-white/10 before:to-transparent">
+                
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-[#050505] bg-[#FF9933] text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform duration-300 group-hover:scale-125">
+                        <i class="fas fa-star text-sm"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-panel p-6 md:p-8 rounded-3xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">FOS - Field Officer Sales</h3>
+                            <span class="text-gray-500 font-medium text-sm bg-gray-100 dark:bg-white/5 px-3 py-1 rounded-full mt-2 md:mt-0 inline-block w-fit"><i class="far fa-calendar-alt mr-1"></i> April 2026 - Present</span>
+                        </div>
+                        <p class="text-blue-600 dark:text-blue-400 font-bold text-sm tracking-wide uppercase mb-5"><i class="fas fa-building mr-1 opacity-70"></i> Reliance Jio Infocomm Limited</p>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-400 font-light text-sm md:text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Managed a comprehensive network of leading retailers to ensure seamless product distribution.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Distributed SIMs, Handsets, and a variety of key company products efficiently across territories.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Handled financial operations, including collecting money and managing balance ledgers.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Drove aggressive MNP (Mobile Number Portability) campaigns to capture competitor market share.</li>
+                        </ul>
+                    </div>
+                </div>
 
-        <section id="experience" class="scroll-mt-32">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
-                    <i class="fas fa-briefcase text-[#FF9933] text-xl"></i>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Professional Experience</h2>
-                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-1">Promoter</h3>
-                                <p class="text-[#FF9933] font-medium text-sm tracking-wide uppercase"><i class="fas fa-building mr-1 opacity-70"></i> Vi India Ltd.</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-3 text-gray-400 font-light text-sm md:text-base">
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Actively promoted Vi services through on-ground marketing and customer interaction.</li>
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Facilitated new prepaid activations and educated users on competitive data plans.</li>
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Maintained high engagement levels at physical kiosks to drive brand awareness.</li>
-                        </ul>
-                    </div>
-                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-[#050505] bg-gray-300 dark:bg-white/20 text-gray-600 dark:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform duration-300 group-hover:scale-125">
+                        <i class="fas fa-briefcase text-sm"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-panel p-6 md:p-8 rounded-3xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">FSE - Field Sales Executive</h3>
+                            <span class="text-gray-500 font-medium text-sm bg-gray-100 dark:bg-white/5 px-3 py-1 rounded-full mt-2 md:mt-0 inline-block w-fit"><i class="far fa-calendar-alt mr-1"></i> April 2025 - March 2026</span>
+                        </div>
+                        <p class="text-blue-600 dark:text-blue-400 font-bold text-sm tracking-wide uppercase mb-5"><i class="fas fa-building mr-1 opacity-70"></i> Reliance Jio Infocomm Limited</p>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-400 font-light text-sm md:text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Spearheaded direct sales initiatives and activated new connections.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Drove localized marketing efforts to expand the telecom user base.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Built trusted relationships with community members to boost brand loyalty.</li>
+                        </ul>
+                    </div>
+                </div>
 
-                <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-1">Field Sales Executive</h3>
-                                <p class="text-[#FF9933] font-medium text-sm tracking-wide uppercase"><i class="fas fa-building mr-1 opacity-70"></i> Reliance Jio Infocomm Ltd.</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-3 text-gray-400 font-light text-sm md:text-base">
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Spearheaded direct sales initiatives and activated new connections.</li>
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Drove localized marketing efforts to expand the telecom user base.</li>
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Built trusted relationships with community members to boost brand loyalty.</li>
-                        </ul>
-                    </div>
-                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-[#050505] bg-gray-300 dark:bg-white/20 text-gray-600 dark:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform duration-300 group-hover:scale-125">
+                        <i class="fas fa-id-badge text-sm"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-panel p-6 md:p-8 rounded-3xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">JSS - Jio Sales Specialist</h3>
+                            <span class="text-white font-medium text-xs bg-[#FF9933] px-3 py-1 rounded-full shadow-sm mt-2 md:mt-0 inline-block w-fit">Internship</span>
+                        </div>
+                        <p class="text-blue-600 dark:text-blue-400 font-bold text-sm tracking-wide uppercase mb-5"><i class="fas fa-building mr-1 opacity-70"></i> Param Enterprise</p>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-400 font-light text-sm md:text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Executed strategic campaigns specifically targeting Gen Z customer onboarding.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Educated customers on prepaid plans, benefits, and network advantages.</li>
+                        </ul>
+                    </div>
+                </div>
 
-                <div class="glass-panel p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold text-white mb-1">Jio Sales Specialist</h3>
-                                <p class="text-[#FF9933] font-medium text-sm tracking-wide uppercase"><i class="fas fa-building mr-1 opacity-70"></i> Param Enterprise</p>
-                            </div>
-                            <span class="text-gray-500 text-xs bg-black/50 px-3 py-1 rounded-full border border-gray-800">Internship</span>
-                        </div>
-                        <ul class="space-y-3 text-gray-400 font-light text-sm md:text-base">
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Executed strategic campaigns specifically targeting Gen Z customer onboarding.</li>
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Educated customers on prepaid plans, benefits, and network advantages.</li>
-                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Facilitated seamless Mobile Number Portability (MNP) requests.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-[#050505] bg-gray-300 dark:bg-white/20 text-gray-600 dark:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform duration-300 group-hover:scale-125">
+                        <i class="fas fa-bullhorn text-sm"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-panel p-6 md:p-8 rounded-3xl">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">Rural Promoter</h3>
+                            <span class="text-gray-500 font-medium text-sm bg-gray-100 dark:bg-white/5 px-3 py-1 rounded-full mt-2 md:mt-0 inline-block w-fit"><i class="far fa-calendar-alt mr-1"></i> April 2024 - March 2025</span>
+                        </div>
+                        <p class="text-[#e20000] dark:text-[#ff3b3b] font-bold text-sm tracking-wide uppercase mb-5"><i class="fas fa-building mr-1 opacity-70"></i> Vi India Ltd.</p>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-400 font-light text-sm md:text-base">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Actively promoted Vi services through on-ground marketing and customer interaction.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Facilitated new prepaid activations and educated users on competitive data plans.</li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-[#FF9933] mt-1 text-sm"></i> Maintained high engagement levels at physical kiosks to drive brand awareness.</li>
+                        </ul>
+                    </div>
+                </div>
 
-        <section id="strengths" class="scroll-mt-32">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
-                    <i class="fas fa-bolt text-[#FF9933] text-xl"></i>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Core Strengths</h2>
-                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
-            </div>
+            </div>
+        </section>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
-                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
-                        <i class="fas fa-comments text-base sm:text-lg"></i>
-                    </div>
-                    <span class="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Communication</span>
-                </div>
-                
-                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
-                        <i class="fas fa-users-cog text-base sm:text-lg"></i>
-                    </div>
-                    <span class="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Leadership</span>
-                </div>
-                
-                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
-                        <i class="fas fa-puzzle-piece text-base sm:text-lg"></i>
-                    </div>
-                    <span class="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Problem Solving</span>
-                </div>
-                
-                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
-                        <i class="fas fa-hourglass-half text-base sm:text-lg"></i>
-                    </div>
-                    <span class="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Time Management</span>
-                </div>
-                
-                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
-                        <i class="fas fa-lightbulb text-base sm:text-lg"></i>
-                    </div>
-                    <span class="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Creativity</span>
-                </div>
-                
-                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
-                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
-                        <i class="fas fa-brain text-base sm:text-lg"></i>
-                    </div>
-                    <span class="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Quick Learner</span>
-                </div>
-            </div>
-        </section>
+        <section id="education" class="scroll-mt-32">
+            <div class="flex items-center gap-4 mb-10" data-aos="fade-up">
+                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
+                    <i class="fas fa-graduation-cap text-[#FF9933] text-xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Education & Certifications</h2>
+                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="text-[#FF9933] font-semibold text-lg mb-1"><i class="fas fa-university mr-2 opacity-70"></i>Bachelor of Commerce</h4>
+                    <p class="text-gray-800 dark:text-white mb-2">K. H. Madhvani College</p>
+                    <p class="text-gray-500 text-sm font-light"><i class="far fa-calendar-alt mr-1"></i> Sept 2023 - Present</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <h4 class="text-[#FF9933] font-semibold text-lg mb-1"><i class="fas fa-bezier-curve mr-2 opacity-70"></i>Graphic Design</h4>
+                    <p class="text-gray-800 dark:text-white mb-2">Ramba Computer Class</p>
+                    <p class="text-gray-500 text-sm font-light"><i class="far fa-calendar-alt mr-1"></i> Feb 2025 - May 2025</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl" data-aos="fade-up" data-aos-delay="300">
+                    <h4 class="text-[#FF9933] font-semibold text-lg mb-1"><i class="fas fa-chart-line mr-2 opacity-70"></i>Tally & Finance</h4>
+                    <p class="text-gray-800 dark:text-white mb-2">Ramba Computer Class</p>
+                    <p class="text-gray-500 text-sm font-light"><i class="far fa-calendar-alt mr-1"></i> Feb 2025 - May 2025</p>
+                </div>
+            </div>
+        </section>
 
-                    <section id="skills" class="scroll-mt-32">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
-                    <i class="fas fa-star text-[#FF9933] text-xl"></i>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Expertise & Interests</h2>
-                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
-            </div>
-            
-            <div class="glass-panel p-10 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-[#FF9933] text-sm font-medium tracking-widest uppercase mb-6"><i class="fas fa-tools mr-2"></i> Professional Skills</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="bg-white/5 border border-white/10 text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 cursor-default"><i class="fas fa-headset mr-1 opacity-50"></i> Customer Service</span>
-                        <span class="bg-white/5 border border-white/10 text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 cursor-default"><i class="fas fa-chart-pie mr-1 opacity-50"></i> Sales Techniques</span>
-                        <span class="bg-white/5 border border-white/10 text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 cursor-default"><i class="fas fa-bullseye mr-1 opacity-50"></i> Lead Generation</span>
-                        <span class="bg-white/5 border border-white/10 text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 cursor-default"><i class="fas fa-desktop mr-1 opacity-50"></i> CRM Proficiency</span>
-                        <span class="bg-white/5 border border-white/10 text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 cursor-default"><i class="fas fa-level-up-alt mr-1 opacity-50"></i> Upselling</span>
-                        <span class="bg-white/5 border border-white/10 text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 cursor-default"><i class="fas fa-pen-nib mr-1 opacity-50"></i> Photoshop & CorelDRAW</span>
-                    </div>
-                </div>
+        <section id="strengths" class="scroll-mt-32">
+            <div class="flex items-center gap-4 mb-10" data-aos="fade-up">
+                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
+                    <i class="fas fa-bolt text-[#FF9933] text-xl"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Core Strengths</h2>
+                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
+            </div>
 
-                <div>
-                    <h3 class="text-[#FF9933] text-sm font-medium tracking-widest uppercase mb-6"><i class="fas fa-compass mr-2"></i> Outside of Work</h3>
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-start gap-4 bg-black/40 p-4 rounded-2xl w-full border border-white/5 hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.1)] transition duration-300">
-                            <div class="bg-white/10 w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-[#FF9933]">
-                                <i class="fas fa-gamepad text-lg"></i>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-white font-medium mb-1">Gaming Enthusiast</span>
-                                <span class="text-gray-400 font-light text-sm leading-snug">Minecraft, Poppy PlayTime, Resident Evil Series, Phasmophobia, Gang Beasts, and tuning into Techno Gamerz vlogs.</span>
-                            </div>
-                        </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
+                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left" data-aos="zoom-in" data-aos-delay="50">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comments text-base sm:text-lg"></i>
+                    </div>
+                    <span class="text-gray-800 dark:text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Communication</span>
+                </div>
+                
+                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
+                        <i class="fas fa-users-cog text-base sm:text-lg"></i>
+                    </div>
+                    <span class="text-gray-800 dark:text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Leadership</span>
+                </div>
+                
+                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left" data-aos="zoom-in" data-aos-delay="150">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
+                        <i class="fas fa-puzzle-piece text-base sm:text-lg"></i>
+                    </div>
+                    <span class="text-gray-800 dark:text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Problem Solving</span>
+                </div>
+                
+                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
+                        <i class="fas fa-hourglass-half text-base sm:text-lg"></i>
+                    </div>
+                    <span class="text-gray-800 dark:text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Time Management</span>
+                </div>
+                
+                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left" data-aos="zoom-in" data-aos-delay="250">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
+                        <i class="fas fa-lightbulb text-base sm:text-lg"></i>
+                    </div>
+                    <span class="text-gray-800 dark:text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Creativity</span>
+                </div>
+                
+                <div class="glass-panel p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] flex-shrink-0">
+                        <i class="fas fa-brain text-base sm:text-lg"></i>
+                    </div>
+                    <span class="text-gray-800 dark:text-white font-medium text-xs sm:text-sm md:text-base tracking-wide leading-tight break-words">Quick Learner</span>
+                </div>
+            </div>
+        </section>
 
-                        <div class="flex items-center gap-4 bg-black/40 p-4 rounded-2xl w-full border border-white/5 hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.1)] transition duration-300">
-                            <div class="bg-white/10 w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-[#FF9933]">
-                                <i class="fas fa-plane text-lg"></i>
-                            </div>
-                            <span class="text-gray-300 font-light text-sm">Traveling & Exploring New Places</span>
-                        </div>
+        <section id="skills" class="scroll-mt-32">
+            <div class="flex items-center gap-4 mb-10" data-aos="fade-up">
+                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
+                    <i class="fas fa-star text-[#FF9933] text-xl"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Expertise & Interests</h2>
+                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
+            </div>
+            
+            <div class="glass-panel p-10 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-12" data-aos="fade-up" data-aos-delay="100">
+                <div>
+                    <h3 class="text-[#FF9933] text-sm font-medium tracking-widest uppercase mb-6"><i class="fas fa-tools mr-2"></i> Professional Skills</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 transform hover:-translate-y-1"><i class="fas fa-headset mr-1 opacity-50"></i> Customer Service</span>
+                        <span class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 transform hover:-translate-y-1"><i class="fas fa-chart-pie mr-1 opacity-50"></i> Sales Techniques</span>
+                        <span class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 transform hover:-translate-y-1"><i class="fas fa-bullseye mr-1 opacity-50"></i> Lead Generation</span>
+                        <span class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 transform hover:-translate-y-1"><i class="fas fa-desktop mr-1 opacity-50"></i> CRM Proficiency</span>
+                        <span class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 transform hover:-translate-y-1"><i class="fas fa-level-up-alt mr-1 opacity-50"></i> Upselling</span>
+                        <span class="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-light hover:border-[#FF9933] hover:text-[#FF9933] hover:bg-[#FF9933]/5 transition duration-300 transform hover:-translate-y-1"><i class="fas fa-pen-nib mr-1 opacity-50"></i> Photoshop & CorelDRAW</span>
+                    </div>
+                </div>
 
-                                                    <div class="flex items-center gap-4 bg-black/40 p-4 rounded-2xl w-full border border-white/5 hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.1)] transition duration-300">
-                            <div class="bg-white/10 w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-[#FF9933]">
-                                <i class="fas fa-music text-lg"></i>
-                            </div>
-                            <span class="text-gray-300 font-light text-sm">Listening to Indian Classical & Melody Music</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div>
+                    <h3 class="text-[#FF9933] text-sm font-medium tracking-widest uppercase mb-6"><i class="fas fa-compass mr-2"></i> Outside of Work</h3>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-start gap-4 bg-gray-100 dark:bg-black/40 p-4 rounded-2xl w-full border border-gray-200 dark:border-white/5 hover:border-[#FF9933] dark:hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.1)] transition duration-300 group">
+                            <div class="bg-white dark:bg-white/10 w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-[#FF9933] group-hover:rotate-12 transition-transform shadow-sm dark:shadow-none">
+                                <i class="fas fa-gamepad text-lg"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-gray-800 dark:text-white font-medium mb-1">Gaming Enthusiast</span>
+                                <span class="text-gray-600 dark:text-gray-400 font-light text-sm leading-snug">Minecraft, Poppy PlayTime, Resident Evil Series, Phasmophobia, Gang Beasts, and tuning into Techno Gamerz vlogs.</span>
+                            </div>
+                        </div>
 
-        <section id="languages" class="scroll-mt-32">
-            <div class="flex items-center gap-4 mb-10">
-                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
-                    <i class="fas fa-language text-[#FF9933] text-xl"></i>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Languages Known</h2>
-                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
-            </div>
+                        <div class="flex items-center gap-4 bg-gray-100 dark:bg-black/40 p-4 rounded-2xl w-full border border-gray-200 dark:border-white/5 hover:border-[#FF9933] dark:hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.1)] transition duration-300 group">
+                            <div class="bg-white dark:bg-white/10 w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-[#FF9933] group-hover:rotate-12 transition-transform shadow-sm dark:shadow-none">
+                                <i class="fas fa-plane text-lg"></i>
+                            </div>
+                            <span class="text-gray-700 dark:text-gray-300 font-light text-sm">Traveling & Exploring New Places</span>
+                        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 hover:bg-white/5 transition duration-300">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FF9933] to-[#cc7a29] flex items-center justify-center text-black font-extrabold text-xl shadow-[0_0_15px_rgba(255,153,51,0.5)] flex-shrink-0 border-2 border-black">
-                        Gu
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold text-lg tracking-wide mb-0.5">Gujarati</h4>
-                        <p class="text-[#FF9933] text-sm font-medium tracking-widest uppercase">Native</p>
-                    </div>
-                </div>
+                        <div class="flex items-center gap-4 bg-gray-100 dark:bg-black/40 p-4 rounded-2xl w-full border border-gray-200 dark:border-white/5 hover:border-[#FF9933] dark:hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.1)] transition duration-300 group">
+                            <div class="bg-white dark:bg-white/10 w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-[#FF9933] group-hover:rotate-12 transition-transform shadow-sm dark:shadow-none">
+                                <i class="fas fa-music text-lg"></i>
+                            </div>
+                            <span class="text-gray-700 dark:text-gray-300 font-light text-sm">Listening to Indian Classical & Melody Music</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 hover:bg-white/5 transition duration-300">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FF9933] to-[#cc7a29] flex items-center justify-center text-black font-extrabold text-xl shadow-[0_0_15px_rgba(255,153,51,0.5)] flex-shrink-0 border-2 border-black">
-                        Hi
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold text-lg tracking-wide mb-0.5">Hindi</h4>
-                        <p class="text-[#FF9933] text-sm font-medium tracking-widest uppercase">Proficient</p>
-                    </div>
-                </div>
+        <section id="languages" class="scroll-mt-32">
+            <div class="flex items-center gap-4 mb-10" data-aos="fade-up">
+                <div class="bg-[#FF9933]/10 w-12 h-12 rounded-xl flex items-center justify-center icon-glow">
+                    <i class="fas fa-language text-[#FF9933] text-xl"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Languages Known</h2>
+                <div class="h-[1px] bg-gradient-to-r from-[#FF9933]/50 to-transparent flex-grow ml-4"></div>
+            </div>
 
-                <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 hover:bg-white/5 transition duration-300">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FF9933] to-[#cc7a29] flex items-center justify-center text-black font-extrabold text-xl shadow-[0_0_15px_rgba(255,153,51,0.5)] flex-shrink-0 border-2 border-black">
-                        En
-                    </div>
-                    <div>
-                        <h4 class="text-white font-bold text-lg tracking-wide mb-0.5">English</h4>
-                        <p class="text-[#FF9933] text-sm font-medium tracking-widest uppercase">Fluent</p>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 hover:bg-gray-100 dark:hover:bg-white/5 transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FF9933] to-[#cc7a29] flex items-center justify-center text-white dark:text-black font-extrabold text-xl shadow-[0_0_15px_rgba(255,153,51,0.5)] flex-shrink-0 border-2 border-white dark:border-black transform hover:scale-110 transition-transform">
+                        Gu
+                    </div>
+                    <div>
+                        <h4 class="text-gray-900 dark:text-white font-bold text-lg tracking-wide mb-0.5">Gujarati</h4>
+                        <p class="text-[#FF9933] text-sm font-medium tracking-widest uppercase">Native</p>
+                    </div>
+                </div>
 
-            </div>
-        </section>
+                <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 hover:bg-gray-100 dark:hover:bg-white/5 transition duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FF9933] to-[#cc7a29] flex items-center justify-center text-white dark:text-black font-extrabold text-xl shadow-[0_0_15px_rgba(255,153,51,0.5)] flex-shrink-0 border-2 border-white dark:border-black transform hover:scale-110 transition-transform">
+                        Hi
+                    </div>
+                    <div>
+                        <h4 class="text-gray-900 dark:text-white font-bold text-lg tracking-wide mb-0.5">Hindi</h4>
+                        <p class="text-[#FF9933] text-sm font-medium tracking-widest uppercase">Proficient</p>
+                    </div>
+                </div>
 
-    </main>
+                <div class="glass-panel p-6 rounded-3xl flex items-center gap-5 hover:bg-gray-100 dark:hover:bg-white/5 transition duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#FF9933] to-[#cc7a29] flex items-center justify-center text-white dark:text-black font-extrabold text-xl shadow-[0_0_15px_rgba(255,153,51,0.5)] flex-shrink-0 border-2 border-white dark:border-black transform hover:scale-110 transition-transform">
+                        En
+                    </div>
+                    <div>
+                        <h4 class="text-gray-900 dark:text-white font-bold text-lg tracking-wide mb-0.5">English</h4>
+                        <p class="text-[#FF9933] text-sm font-medium tracking-widest uppercase">Fluent</p>
+                    </div>
+                </div>
 
-    <footer class="border-t border-white/5 bg-[#030303] py-12 text-center relative z-10">
-        <div class="flex justify-center gap-6 mb-8">
-            <a href="https://www.linkedin.com/in/chirag-maru-2016162b8" target="_blank" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#FF9933] hover:text-black hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.4)] transition duration-300">
-                <i class="fab fa-linkedin-in text-lg"></i>
-            </a>
-            <a href="https://instagram.com/cm_graphixx_912" target="_blank" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#FF9933] hover:text-black hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.4)] transition duration-300">
-                <i class="fab fa-instagram text-lg"></i>
-            </a>
-        </div>
-        <p class="font-etna text-[#FF9933] text-xl mb-3 tracking-wider">Portfolio</p>
-        <p class="text-gray-600 text-sm font-light">&copy; 2026 Chirag Maru. All rights reserved.</p>
-    </footer>
+            </div>
+        </section>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
-            
-            if (menu.classList.contains('hidden')) {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-                icon.style.transform = 'rotate(90deg)';
-            }
-        }
-    </script>
+    </main>
+
+    <footer class="border-t border-gray-200 dark:border-white/5 bg-white dark:bg-[#030303] py-12 text-center relative z-10 transition-colors duration-500">
+        <div class="flex justify-center gap-6 mb-8">
+            <a href="https://www.linkedin.com/in/chirag-maru-2016162b8" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-[#FF9933] hover:text-white dark:hover:text-black hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.4)] transform hover:-translate-y-1 transition-all duration-300">
+                <i class="fab fa-linkedin-in text-lg"></i>
+            </a>
+            <a href="https://instagram.com/cm_graphixx_912" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-[#FF9933] hover:text-white dark:hover:text-black hover:border-[#FF9933] hover:shadow-[0_0_15px_rgba(255,153,51,0.4)] transform hover:-translate-y-1 transition-all duration-300">
+                                <i class="fab fa-instagram text-lg"></i>
+            </a>
+        </div>
+        <p class="font-etna text-[#FF9933] text-xl mb-3 tracking-wider">Portfolio</p>
+        <p class="text-gray-500 dark:text-gray-600 text-sm font-light">&copy; 2026 Chirag Maru. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize Animations
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true,
+            offset: 50
+        });
+
+        // Mobile Menu Logic
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                icon.style.transform = 'rotate(90deg)';
+            }
+        }
+
+        // Light/Dark Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const themeToggleIconMobile = document.getElementById('theme-toggle-icon-mobile');
+
+        // Check Local Storage
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+            themeToggleIcon.classList.replace('fa-sun', 'fa-moon');
+            themeToggleIconMobile.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('color-theme', 'dark');
+                themeToggleIcon.classList.replace('fa-moon', 'fa-sun');
+                themeToggleIconMobile.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                localStorage.setItem('color-theme', 'light');
+                themeToggleIcon.classList.replace('fa-sun', 'fa-moon');
+                themeToggleIconMobile.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleMobileBtn.addEventListener('click', toggleTheme);
+    </script>
 </body>
 </html>
